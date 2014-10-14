@@ -27,6 +27,10 @@ class Chip6502(object):
             self.plp_command()
         elif command == OpCodes.bmi_relative_command:
             self.bmi_command()
+        elif command == OpCodes.sec_implied_command:
+            self.sec_command()
+        elif command == OpCodes.rti_implied_command:
+            self.rti_command()
 
     def brk_command(self):
         pass
@@ -62,7 +66,9 @@ class Chip6502(object):
 
     def is_and_command(self, command):
         return command == OpCodes.and_indirect_x_command or command == OpCodes.and_zero_page_command or \
-               command == OpCodes.and_immediate_command or command == OpCodes.and_absolute_command
+               command == OpCodes.and_immediate_command or command == OpCodes.and_absolute_command or \
+               command == OpCodes.and_indirect_y_command or command == OpCodes.and_zero_page_x_command or \
+               command == OpCodes.and_absolute_y_command or command == OpCodes.and_absolute_x_command
 
     def and_command(self):
         pass
@@ -75,7 +81,8 @@ class Chip6502(object):
 
     def is_rol_command(self, command):
         return command == OpCodes.rol_zero_page_command or command == OpCodes.rol_accumulator_command or \
-               command == OpCodes.rol_absolute_command
+               command == OpCodes.rol_absolute_command or command == OpCodes.rol_zero_page_x_command or \
+               command == OpCodes.rol_absolute_x_command
 
     def rol_command(self):
         pass
@@ -84,4 +91,10 @@ class Chip6502(object):
         pass
 
     def bmi_command(self):
+        pass
+
+    def sec_command(self):
+        pass
+
+    def rti_command(self):
         pass

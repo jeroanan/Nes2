@@ -19,12 +19,14 @@ class Chip6502(object):
             self.jsr_command()
         elif self.is_and_command(command):
             self.and_command()
-        elif command == OpCodes.bit_zero_page_command:
+        elif self.is_bit_command(command):
             self.bit_command()
         elif self.is_rol_command(command):
             self.rol_command()
         elif command == OpCodes.plp_implied_command:
             self.plp_command()
+        elif command == OpCodes.bmi_relative_command:
+            self.bmi_command()
 
     def brk_command(self):
         pass
@@ -60,19 +62,26 @@ class Chip6502(object):
 
     def is_and_command(self, command):
         return command == OpCodes.and_indirect_x_command or command == OpCodes.and_zero_page_command or \
-               command == OpCodes.and_immediate_command
+               command == OpCodes.and_immediate_command or command == OpCodes.and_absolute_command
 
     def and_command(self):
         pass
+
+    def is_bit_command(self, command):
+        return command == OpCodes.bit_zero_page_command or command == OpCodes.bit_absolute_command
 
     def bit_command(self):
         pass
 
     def is_rol_command(self, command):
-        return command == OpCodes.rol_zero_page_command or command == OpCodes.rol_accumulator_command
+        return command == OpCodes.rol_zero_page_command or command == OpCodes.rol_accumulator_command or \
+               command == OpCodes.rol_absolute_command
 
     def rol_command(self):
         pass
 
     def plp_command(self):
+        pass
+
+    def bmi_command(self):
         pass

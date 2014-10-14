@@ -84,6 +84,18 @@ class Test6502(unittest.TestCase):
     def test_execute_rol_accumulator_command_calls_rol_command(self):
         self.assert_opcode_execution(OpCodes.rol_accumulator_command, self.__target.get_rol_command_executed)
 
+    def test_execute_bit_absolute_command_calls_bit_command(self):
+        self.assert_opcode_execution(OpCodes.bit_absolute_command, self.__target.get_bit_command_executed)
+
+    def test_execute_and_absolute_command_calls_and_command(self):
+        self.assert_opcode_execution(OpCodes.and_absolute_command, self.__target.get_and_command_executed)
+
+    def test_execute_rol_absolute_command_calls_rol_command(self):
+        self.assert_opcode_execution(OpCodes.rol_absolute_command, self.__target.get_rol_command_executed)
+
+    def test_execute_bmi_relative_command_calls_bmi_command(self):
+        self.assert_opcode_execution(OpCodes.bmi_relative_command, self.__target.get_bmi_command_executed)
+
     def assert_opcode_execution(self, op_code, status_method):
         self.__target.execute(op_code)
         self.assertTrue(status_method())

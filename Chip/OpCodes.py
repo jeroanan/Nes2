@@ -23,3 +23,7 @@ rol_zero_page_command = 0x26
 plp_implied_command = 0x28
 and_immediate_command = 0x29
 rol_accumulator_command = 0x2A
+bit_absolute_command = 0x2C
+and_absolute_command = 0x2D
+rol_absolute_command = 0x2E
+bmi_relative_command = 0x30

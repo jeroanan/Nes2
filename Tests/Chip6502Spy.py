@@ -69,6 +69,12 @@ class Chip6502Spy(Chip6502):
     def get_plp_command_executed(self):
         return self.__plp_command_executed
 
+    def bmi_command(self):
+        self.__bmi_command_executed = True
+
+    def get_bmi_command_executed(self):
+        return self.__bmi_command_executed
+
     def __init__(self):
         self.__asl_command_executed = False
         self.__ora_command_executed = False
@@ -81,3 +87,4 @@ class Chip6502Spy(Chip6502):
         self.__bit_command_executed = False
         self.__rol_command_executed = False
         self.__plp_command_executed = False
+        self.__bmi_command_executed = False

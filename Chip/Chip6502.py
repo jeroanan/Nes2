@@ -1,6 +1,5 @@
 from Chip import OpCodes
 
-
 class Chip6502(object):
     def execute(self, command):
         if command == OpCodes.brk_command:
@@ -31,6 +30,26 @@ class Chip6502(object):
             self.sec_command()
         elif command == OpCodes.rti_implied_command:
             self.rti_command()
+        elif self.is_eor_command(command):
+            self.eor_command()
+        elif self.is_lsr_command(command):
+            self.lsr_command()
+        elif command == OpCodes.pha_implied_command:
+            self.pha_command()
+        elif command == OpCodes.bvc_relative_command:
+            self.bvc_command()
+        elif command == OpCodes.cli_implied_command:
+            self.cli_command()
+        elif command == OpCodes.rts_implied_command:
+            self.rts_command()
+        elif self.is_adc_command(command):
+            self.adc_command()
+        elif self.is_ror_command(command):
+            self.ror_command()
+        elif command == OpCodes.pla_implied_command:
+            self.pla_command()
+        elif command == OpCodes.jmp_indirect_command:
+            self.jmp_command()
 
     def brk_command(self):
         pass
@@ -97,4 +116,52 @@ class Chip6502(object):
         pass
 
     def rti_command(self):
+        pass
+
+    def is_eor_command(self, command):
+        return command == OpCodes.eor_indirect_x_command or command == OpCodes.eor_zero_page_command or \
+               command == OpCodes.eor_immediate_command or command == OpCodes.eor_absolute_command or \
+               command == OpCodes.eor_indirect_y_command or command == OpCodes.eor_zero_page_x_command or \
+               command == OpCodes.eor_absolute_y_command or command == OpCodes.eor_absolute_x_command
+
+    def eor_command(self):
+        pass
+
+    def is_lsr_command(self, command):
+        return command == OpCodes.lsr_zero_page_command or command == OpCodes.lsr_accumulator_command or \
+               command == OpCodes.lsr_absolute_command or command == OpCodes.lsr_zero_page_x_command or \
+               command == OpCodes.lsr_absolute_x_command
+
+    def lsr_command(self):
+        pass
+
+    def pha_command(self):
+        pass
+
+    def bvc_command(self):
+        pass
+
+    def cli_command(self):
+        pass
+
+    def rts_command(self):
+        pass
+
+    def is_adc_command(self, command):
+        return command == OpCodes.adc_indirect_x_command or command == OpCodes.adc_zero_page_command or \
+               command == OpCodes.adc_immediate_command
+
+    def adc_command(self):
+        pass
+
+    def is_ror_command(self, command):
+        return command == OpCodes.ror_zero_page_command or command == OpCodes.ror_accumulator_command
+
+    def ror_command(self):
+        pass
+
+    def pla_command(self):
+        pass
+
+    def jmp_command(self):
         pass

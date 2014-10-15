@@ -87,6 +87,66 @@ class Chip6502Spy(Chip6502):
     def get_rti_command_executed(self):
         return self.__rti_command_executed
 
+    def eor_command(self):
+        self.__eor_command_executed = True
+
+    def get_eor_command_executed(self):
+        return self.__eor_command_executed
+
+    def get_lsr_command_executed(self):
+        return self.__lsr_command_executed
+
+    def lsr_command(self):
+        self.__lsr_command_executed = True
+
+    def get_pha_command_executed(self):
+        return self.__pha_command_executed
+
+    def pha_command(self):
+        self.__pha_command_executed = True
+
+    def get_bvc_command_executed(self):
+        return self.__bvc_command_executed
+
+    def bvc_command(self):
+        self.__bvc_command_executed = True
+
+    def get_cli_command_executed(self):
+        return self.__cli_command_executed
+
+    def cli_command(self):
+        self.__cli_command_executed = True
+
+    def get_rts_command_executed(self):
+        return self.__rts_command_executed
+
+    def rts_command(self):
+        self.__rts_command_executed = True
+
+    def get_adc_command_executed(self):
+        return self.__adc_command_executed
+
+    def adc_command(self):
+        self.__adc_command_executed = True
+
+    def get_ror_command_executed(self):
+        return self.__ror_command_executed
+
+    def ror_command(self):
+        self.__ror_command_executed = True
+
+    def get_pla_command_executed(self):
+        return self.__pla_command_executed
+
+    def pla_command(self):
+        self.__pla_command_executed = True
+
+    def jmp_command(self):
+        self.__jmp_command_executed = True
+
+    def get_jmp_command_executed(self):
+        return self.__jmp_command_executed
+
     def __init__(self):
         self.__asl_command_executed = False
         self.__ora_command_executed = False
@@ -102,3 +162,13 @@ class Chip6502Spy(Chip6502):
         self.__bmi_command_executed = False
         self.__sec_command_executed = False
         self.__rti_command_executed = False
+        self.__eor_command_executed = False
+        self.__lsr_command_executed = False
+        self.__pha_command_executed = False
+        self.__bvc_command_executed = False
+        self.__cli_command_executed = False
+        self.__rts_command_executed = False
+        self.__adc_command_executed = False
+        self.__ror_command_executed = False
+        self.__pla_command_executed = False
+        self.__jmp_command_executed = False

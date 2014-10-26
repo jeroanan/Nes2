@@ -141,13 +141,152 @@ class Chip6502Spy(Chip6502):
     def pla_command(self):
         self.__pla_command_executed = True
 
-    def jmp_command(self):
-        self.__jmp_command_executed = True
-
     def get_jmp_command_executed(self):
         return self.__jmp_command_executed
 
+    def jmp_command(self):
+        self.__jmp_command_executed = True
+
+    def get_bvs_command_executed(self):
+        return self.__bvs_command_executed
+
+    def bvs_command(self):
+        self.__bvs_command_executed = True
+
+    def get_sei_command_executed(self):
+        return self.__sei_command_executed
+
+    def sei_command(self):
+        self.__sei_command_executed = True
+
+    def get_sta_command_executed(self):
+        return self.__sta_command_executed
+
+    def sta_command(self):
+        self.__sta_command_executed = True
+
+    def get_sty_command_executed(self):
+        return self.__sty_command_executed
+
+    def sty_command(self):
+        self.__sty_command_executed = True
+
+    def get_stx_command_executed(self):
+        return self.__stx_command_executed
+
+    def stx_command(self):
+        self.__stx_command_executed = True
+
+    def get_dey_command_executed(self):
+        return self.__dey_command_executed
+
+    def dey_command(self):
+        self.__dey_command_executed = True
+
+    def get_txa_command_executed(self):
+        return self.__txa_command_executed
+
+    def txa_command(self):
+        self.__txa_command_executed = True
+
+    def get_bcc_command_executed(self):
+        return self.__bcc_command_executed
+
+    def bcc_command(self):
+        self.__bcc_command_executed = True
+
+    def get_tya_command_executed(self):
+        return self.__tya_command_executed
+
+    def tya_command(self):
+        self.__tya_command_executed = True
+
+    def get_txs_command_executed(self):
+        return self.__txs_command_executed
+
+    def txs_command(self):
+        self.__txs_command_executed = True
+
+    def get_ldy_command_executed(self):
+        return self.__ldy_command_executed
+
+    def ldy_command(self):
+        self.__ldy_command_executed = True
+
+    def get_lda_command_executed(self):
+        return self.__lda_command_executed
+
+    def lda_command(self):
+        self.__lda_command_executed = True
+
+    def get_ldx_command_executed(self):
+        return self.__ldx_command_executed
+
+    def ldx_command(self):
+        self.__ldx_command_executed = True
+
+    def get_tay_command_executed(self):
+        return self.__tay_command_executed
+
+    def tay_command(self):
+        self.__tay_command_executed = True
+
+    def get_tax_command_executed(self):
+        return self.__tax_command_executed
+
+    def tax_command(self):
+        self.__tax_command_executed = True
+
+    def get_bcs_command_executed(self):
+        return self.__bcs_command_executed
+
+    def bcs_command(self):
+        self.__bcs_command_executed = True
+
+    def get_clv_command_executed(self):
+        return self.__clv_command_executed
+
+    def clv_command(self):
+        self.__clv_command_executed = True
+
+    def get_tsx_command_executed(self):
+        return self.__tsx_command_executed
+
+    def tsx_command(self):
+        self.__tsx_command_executed = True
+
+    def get_cpy_command_executed(self):
+        return self.__cpy_command_executed
+
+    def cpy_command(self):
+        self.__cpy_command_executed = True
+
+    def get_cmp_command_executed(self):
+        return self.__cmp_command_executed
+
+    def cmp_command(self):
+        self.__cmp_command_executed = True
+
+    def get_dec_command_executed(self):
+        return self.__dec_command_executed
+
+    def dec_command(self):
+        self.__dec_command_executed = True
+
+    def get_iny_command_executed(self):
+        return self.__iny_command_executed
+
+    def iny_command(self):
+        self.__iny_command_executed = True
+
+    def get_dex_command_executed(self):
+        return self.__dex_command_executed
+
+    def dex_command(self):
+        self.__dex_command_executed = True
+
     def __init__(self):
+        self.__clv_command_executed = False
         self.__asl_command_executed = False
         self.__ora_command_executed = False
         self.__brk_command_executed = False
@@ -172,3 +311,25 @@ class Chip6502Spy(Chip6502):
         self.__ror_command_executed = False
         self.__pla_command_executed = False
         self.__jmp_command_executed = False
+        self.__bvs_command_executed = False
+        self.__sei_command_executed = False
+        self.__sta_command_executed = False
+        self.__sty_command_executed = False
+        self.__stx_command_executed = False
+        self.__dey_command_executed = False
+        self.__txa_command_executed = False
+        self.__bcc_command_executed = False
+        self.__tya_command_executed = False
+        self.__txs_command_executed = False
+        self.__ldy_command_executed = False
+        self.__lda_command_executed = False
+        self.__ldx_command_executed = False
+        self.__tay_command_executed = False
+        self.__tax_command_executed = False
+        self.__bcs_command_executed = False
+        self.__tsx_command_executed = False
+        self.__cpy_command_executed = False
+        self.__cmp_command_executed = False
+        self.__dec_command_executed = False
+        self.__iny_command_executed = False
+        self.__dex_command_executed = False

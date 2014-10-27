@@ -285,6 +285,60 @@ class Chip6502Spy(Chip6502):
     def dex_command(self):
         self.__dex_command_executed = True
 
+    def get_bne_command_executed(self):
+        return self.__bne_command_executed
+
+    def bne_command(self):
+        self.__bne_command_executed = True
+
+    def get_cld_command_executed(self):
+        return self.__cld_command_executed
+
+    def cld_command(self):
+        self.__cld_command_executed = True
+
+    def get_cpx_command_executed(self):
+        return self.__cpx_command_executed
+
+    def cpx_command(self):
+        self.__cpx_command_executed = True
+
+    def get_sbc_command_executed(self):
+        return self.__sbc_command_executed
+
+    def sbc_command(self):
+        self.__sbc_command_executed = True
+
+    def get_inc_command_executed(self):
+        return self.__inc_command_executed
+
+    def inc_command(self):
+        self.__inc_command_executed = True
+
+    def get_inx_command_executed(self):
+        return self.__inx_command_executed
+
+    def inx_command(self):
+        self.__inx_command_executed = True
+
+    def get_nop_command_executed(self):
+        return self.__nop_command_executed
+
+    def nop_command(self):
+        self.__nop_command_executed = True
+
+    def get_beq_command_executed(self):
+        return self.__beq_command_executed
+
+    def beq_command(self):
+        self.__beq_command_executed = True
+
+    def get_sed_command_executed(self):
+        return self.__sed_command_executed
+
+    def sed_command(self):
+        self.__sed_command_executed = True
+
     def __init__(self):
         self.__clv_command_executed = False
         self.__asl_command_executed = False
@@ -333,3 +387,12 @@ class Chip6502Spy(Chip6502):
         self.__dec_command_executed = False
         self.__iny_command_executed = False
         self.__dex_command_executed = False
+        self.__bne_command_executed = False
+        self.__cld_command_executed = False
+        self.__cpx_command_executed = False
+        self.__sbc_command_executed = False
+        self.__inc_command_executed = False
+        self.__inx_command_executed = False
+        self.__nop_command_executed = False
+        self.__beq_command_executed = False
+        self.__sed_command_executed = False

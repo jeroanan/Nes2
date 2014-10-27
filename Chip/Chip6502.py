@@ -91,12 +91,30 @@ class Chip6502(object):
             self.cpy_command()
         elif self.is_cmp_command(command):
             self.cmp_command()
-        elif command == OpCodes.dec_zero_page_command:
+        elif self.is_dec_command(command):
             self.dec_command()
         elif command == OpCodes.iny_implied_command:
             self.iny_command()
         elif command == OpCodes.dex_implied_command:
             self.dex_command()
+        elif command == OpCodes.bne_relative_command:
+            self.bne_command()
+        elif command == OpCodes.cld_implied_command:
+            self.cld_command()
+        elif self.is_cpx_command(command):
+            self.cpx_command()
+        elif self.is_sbc_command(command):
+            self.sbc_command()
+        elif self.is_inc_command(command):
+            self.inc_command()
+        elif command == OpCodes.inx_implied_command:
+            self.inx_command()
+        elif command == OpCodes.nop_implied_command:
+            self.nop_command()
+        elif command == OpCodes.beq_relative_command:
+            self.beq_command()
+        elif command == OpCodes.sed_implied_command:
+            self.sed_command()
 
     def brk_command(self):
         pass
@@ -293,16 +311,23 @@ class Chip6502(object):
         pass
 
     def is_cpy_command(self, command):
-        return command in [OpCodes.cpy_immediate_command, OpCodes.cpy_zero_page_command]
+        return command in [OpCodes.cpy_immediate_command, OpCodes.cpy_zero_page_command, OpCodes.cpy_absolute_command]
 
     def cpy_command(self):
         pass
 
     def is_cmp_command(self, command):
-        return command in [OpCodes.cmp_indirect_x_command, OpCodes.cmp_zero_page_command, OpCodes.cmp_immediate_command]
+        return command in [OpCodes.cmp_indirect_x_command, OpCodes.cmp_zero_page_command, OpCodes.cmp_immediate_command,
+                           OpCodes.cmp_absolute_command, OpCodes.cmp_indirect_y_command,
+                           OpCodes.cmp_zero_page_x_command, OpCodes.cmp_absolute_y_command,
+                           OpCodes.cmp_absolute_x_command]
 
     def cmp_command(self):
         pass
+
+    def is_dec_command(self, command):
+        return command in [OpCodes.dec_zero_page_command, OpCodes.dec_absolute_command, OpCodes.dec_zero_page_x_command,
+                           OpCodes.dec_absolute_x_command]
 
     def dec_command(self):
         pass
@@ -313,7 +338,45 @@ class Chip6502(object):
     def dex_command(self):
         pass
 
+    def bne_command(self):
+        pass
 
+    def cld_command(self):
+        pass
+
+    def is_cpx_command(self, command):
+        return command in [OpCodes.cpx_immediate_command, OpCodes.cpx_zero_page_command, OpCodes.cpx_absolute_command]
+
+    def cpx_command(self):
+        pass
+
+    def is_sbc_command(self, command):
+        return command in [OpCodes.sbc_indirect_x_command, OpCodes.sbc_zero_page_command, OpCodes.sbc_immediate_command,
+                           OpCodes.sbc_absolute_command, OpCodes.sbc_indirect_y_command,
+                           OpCodes.sbc_zero_page_x_command, OpCodes.sbc_absolute_y_command,
+                           OpCodes.sbc_absolute_x_command]
+
+    def sbc_command(self):
+        pass
+
+    def is_inc_command(self, command):
+        return command in [OpCodes.inc_zero_page_command, OpCodes.inc_absolute_command, OpCodes.inc_zero_page_x_command,
+                           OpCodes.inc_absolute_x_command]
+
+    def inc_command(self):
+        pass
+
+    def inx_command(self):
+        pass
+
+    def nop_command(self):
+        pass
+
+    def beq_command(self):
+        pass
+
+    def sed_command(self):
+        pass
 
 
 

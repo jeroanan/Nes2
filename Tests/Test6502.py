@@ -369,6 +369,96 @@ class Test6502(unittest.TestCase):
     def test_dex_implied_command_calls_dex_method(self):
         self.assert_opcode_execution(OpCodes.dex_implied_command, self.__target.get_dex_command_executed)
 
+    def test_cpy_absolute_command_calls_cpy_method(self):
+        self.assert_opcode_execution(OpCodes.cpy_absolute_command, self.__target.get_cpy_command_executed)
+
+    def test_cmp_absolute_command_calls_cmp_method(self):
+        self.assert_opcode_execution(OpCodes.cmp_absolute_command, self.__target.get_cmp_command_executed)
+
+    def test_dec_absolute_command_calls_dec_method(self):
+        self.assert_opcode_execution(OpCodes.dec_absolute_command, self.__target.get_dec_command_executed)
+
+    def test_bne_relative_command_calls_bne_method(self):
+        self.assert_opcode_execution(OpCodes.bne_relative_command, self.__target.get_bne_command_executed)
+
+    def test_cmp_indirect_y_command_calls_cmp_method(self):
+        self.assert_opcode_execution(OpCodes.cmp_indirect_y_command, self.__target.get_cmp_command_executed)
+
+    def test_cmp_zero_page_x_command_calls_cmp_method(self):
+        self.assert_opcode_execution(OpCodes.cmp_zero_page_x_command, self.__target.get_cmp_command_executed)
+
+    def test_dec_zero_page_x_command_calls_dec_method(self):
+        self.assert_opcode_execution(OpCodes.dec_zero_page_x_command, self.__target.get_dec_command_executed)
+
+    def test_cld_implied_command_calls_cld_method(self):
+        self.assert_opcode_execution(OpCodes.cld_implied_command, self.__target.get_cld_command_executed)
+
+    def test_cmp_absolute_y_command_calls_cmp_method(self):
+        self.assert_opcode_execution(OpCodes.cmp_absolute_y_command, self.__target.get_cmp_command_executed)
+
+    def test_cmp_absolute_x_command_calls_cmp_method(self):
+        self.assert_opcode_execution(OpCodes.cmp_absolute_x_command, self.__target.get_cmp_command_executed)
+
+    def test_dec_absolute_x_command_calls_dec_method(self):
+        self.assert_opcode_execution(OpCodes.dec_absolute_x_command, self.__target.get_dec_command_executed)
+
+    def test_cpx_immediate_command_calls_cpx_method(self):
+        self.assert_opcode_execution(OpCodes.cpx_immediate_command, self.__target.get_cpx_command_executed)
+
+    def test_sbc_indirect_x_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_indirect_x_command, self.__target.get_sbc_command_executed)
+
+    def test_cpx_zero_page_command_calls_cpx_method(self):
+        self.assert_opcode_execution(OpCodes.cpx_zero_page_command, self.__target.get_cpx_command_executed)
+
+    def test_sbc_zero_page_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_zero_page_command, self.__target.get_sbc_command_executed)
+
+    def test_inc_zero_page_command_calls_inc_method(self):
+        self.assert_opcode_execution(OpCodes.inc_zero_page_command, self.__target.get_inc_command_executed)
+
+    def test_inx_implied_command_calls_inx_method(self):
+        self.assert_opcode_execution(OpCodes.inx_implied_command, self.__target.get_inx_command_executed)
+
+    def test_sbc_immediate_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_immediate_command, self.__target.get_sbc_command_executed)
+
+    def test_nop_implied_command_calls_nop_method(self):
+        self.assert_opcode_execution(OpCodes.nop_implied_command, self.__target.get_nop_command_executed)
+
+    def test_cpx_absolute_command_calls_cpx_method(self):
+        self.assert_opcode_execution(OpCodes.cpx_absolute_command, self.__target.get_cpx_command_executed)
+
+    def test_sbc_absolute_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_absolute_command, self.__target.get_sbc_command_executed)
+
+    def test_inc_absolute_command_calls_inc_method(self):
+        self.assert_opcode_execution(OpCodes.inc_absolute_command, self.__target.get_inc_command_executed)
+
+    def test_beq_relative_command_calls_beq_method(self):
+        self.assert_opcode_execution(OpCodes.beq_relative_command, self.__target.get_beq_command_executed)
+
+    def test_sbc_indirect_y_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_indirect_y_command, self.__target.get_sbc_command_executed)
+
+    def test_sbc_zero_page_x_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_zero_page_x_command, self.__target.get_sbc_command_executed)
+
+    def test_inc_zero_page_x_command_calls_inc_method(self):
+        self.assert_opcode_execution(OpCodes.inc_zero_page_x_command, self.__target.get_inc_command_executed)
+
+    def test_sed_implied_command_calls_sed_method(self):
+        self.assert_opcode_execution(OpCodes.sed_implied_command, self.__target.get_sed_command_executed)
+
+    def test_sbc_absolute_y_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_absolute_y_command, self.__target.get_sbc_command_executed)
+
+    def test_sbc_absolute_x_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.sbc_absolute_x_command, self.__target.get_sbc_command_executed)
+
+    def test_inc_absolute_x_command_calls_sbc_method(self):
+        self.assert_opcode_execution(OpCodes.inc_absolute_x_command, self.__target.get_inc_command_executed)
+
     def assert_opcode_execution(self, op_code, status_method):
         self.__target.execute(op_code)
         self.assertTrue(status_method())

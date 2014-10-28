@@ -9,7 +9,8 @@ class Chip6502Spy(Chip6502):
     def get_brk_command_executed(self):
         return self.__brk_command_executed
 
-    def ora_command(self):
+    def ora_command(self, input_value):
+        super().ora_command(input_value)
         self.__ora_command_executed = True
 
     def get_ora_command_executed(self):
@@ -396,3 +397,4 @@ class Chip6502Spy(Chip6502):
         self.__nop_command_executed = False
         self.__beq_command_executed = False
         self.__sed_command_executed = False
+        self.accumulator = 0x0

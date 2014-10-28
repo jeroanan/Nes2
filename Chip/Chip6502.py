@@ -2,11 +2,21 @@ from Chip import OpCodes
 
 
 class Chip6502(object):
-    def execute(self, command):
+
+    def __init__(self):
+        self.accumulator = 0x00
+
+    def set_accumulator(self, value):
+        self.accumulator = value
+
+    def get_accumulator(self):
+        return self.accumulator
+
+    def execute(self, command, operand=None):
         if command == OpCodes.brk_command:
             self.brk_command()
         elif self.is_ora_command(command):
-            self.ora_command()
+            self.ora_command(operand)
         elif self.is_asl_command(command):
             self.asl_command()
         elif command == OpCodes.php_implied_command:
@@ -125,8 +135,11 @@ class Chip6502(object):
                            OpCodes.ora_zero_page_x_command,
                            OpCodes.ora_absolute_y_command, OpCodes.ora_absolute_x_command]
 
-    def ora_command(self):
-        pass
+    def ora_command(self, input_value):
+        if input_value is None:
+            return
+
+        self.set_accumulator(input_value | self.get_accumulator())
 
     def is_asl_command(self, command):
         return command in [OpCodes.asl_zero_page_command, OpCodes.asl_accumulator_command, OpCodes.asl_absolute_command,

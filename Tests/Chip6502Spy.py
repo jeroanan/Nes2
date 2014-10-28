@@ -46,7 +46,8 @@ class Chip6502Spy(Chip6502):
     def get_jsr_command_executed(self):
         return self.__jsr_command_executed
 
-    def and_command(self):
+    def and_command(self, operand):
+        super().and_command(operand)
         self.__and_command_executed = True
 
     def get_and_command_executed(self):
@@ -341,6 +342,7 @@ class Chip6502Spy(Chip6502):
         self.__sed_command_executed = True
 
     def __init__(self):
+        super().__init__()
         self.__clv_command_executed = False
         self.__asl_command_executed = False
         self.__ora_command_executed = False

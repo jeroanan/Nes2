@@ -15,6 +15,61 @@ class TestAdcOpCode(OpCodeTestBase):
     def test_adc_immediate_command_calls_adc_method(self):
         self.assert_opcode_execution(OpCodes.adc_immediate_command, self.target.get_adc_command_executed)
 
+    def __one_plus_one(self):
+        self.target.set_accumulator(0x01)
+        self.target.execute(OpCodes.adc_immediate_command, 0x01)
+
+    def test_adc_immediate_command_performs_add(self):
+        self.__one_plus_one()
+
+        expected_value = 0x01 + 0x01
+        actual_value = self.target.get_accumulator()
+
+        self.assertEqual(expected_value, actual_value)
+
+    def test_adc_immediate_command_does_not_set_carry_flag_needlessly(self):
+        self.__one_plus_one()
+
+        expected_value = 0x0
+        actual_value = self.target.get_carry_flag()
+
+        self.assertEqual(expected_value, actual_value)
+
+    def test_adc_immediate_command_sets_carry_flag_when_needed(self):
+        self.target.set_accumulator(0xFF)
+        self.target.execute(OpCodes.adc_immediate_command, 0x01)
+
+        expected_value = 0x1
+        actual_value = self.target.get_carry_flag()
+
+        self.assertEqual(expected_value, actual_value)
+
+    def test_adc_immediate_command_clears_carry_flag_when_not_needed(self):
+        self.target.set_carry_flag()
+        self.__one_plus_one()
+
+        expected_value = 0x0
+        actual_value = self.target.get_carry_flag()
+
+        self.assertEqual(expected_value, actual_value)
+
+    def test_adc_immediate_command_does_not_set_overflow_flag_needlessly(self):
+        self.__one_plus_one()
+
+        expected_value = 0x0
+        actual_value = self.target.get_overflow_flag()
+
+        self.assertEqual(expected_value, actual_value)
+
+    def test_adc_immediate_command_sets_overflow_flag_when_needed(self):
+        self.target.set_accumulator(127)
+        self.target.execute(OpCodes.adc_immediate_command, 0x01)
+
+        expected_value = 0x01
+        actual_value = self.target.get_overflow_flag()
+
+        self.assertEqual(expected_value, actual_value)
+
     def test_adc_absolute_y_command_calls_adc_method(self):
         self.assert_opcode_execution(OpCodes.adc_absolute_y_command, self.target.get_adc_command_executed)
 

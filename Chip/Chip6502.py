@@ -4,13 +4,30 @@ from Chip import OpCodes
 class Chip6502(object):
 
     def __init__(self):
-        self.accumulator = 0x00
+        self.__accumulator = 0x0
+        self.__carry_flag = 0x0
+        self.__overflow_flag = 0x0
 
     def set_accumulator(self, value):
-        self.accumulator = value
+        self.__accumulator = value
 
     def get_accumulator(self):
-        return self.accumulator
+        return self.__accumulator
+
+    def set_carry_flag(self):
+        self.__carry_flag = 0x01
+
+    def clear_carry_flag(self):
+        self.__carry_flag = 0x0
+
+    def get_carry_flag(self):
+        return self.__carry_flag
+
+    def get_overflow_flag(self):
+        return self.__overflow_flag
+
+    def set_overflow_flag(self):
+        self.__overflow_flag = 0x01
 
     def execute(self, command, operand=None):
         if command == OpCodes.brk_command:
@@ -42,7 +59,7 @@ class Chip6502(object):
         elif command == OpCodes.rti_implied_command:
             self.rti_command()
         elif self.__is_eor_command(command):
-            self.eor_command()
+            self.eor_command(operand)
         elif self.__is_lsr_command(command):
             self.lsr_command()
         elif command == OpCodes.pha_implied_command:
@@ -54,7 +71,7 @@ class Chip6502(object):
         elif command == OpCodes.rts_implied_command:
             self.rts_command()
         elif self.__is_adc_command(command):
-            self.adc_command()
+            self.adc_command(operand)
         elif self.__is_ror_command(command):
             self.ror_command()
         elif command == OpCodes.pla_implied_command:
@@ -136,6 +153,7 @@ class Chip6502(object):
                            OpCodes.ora_absolute_y_command, OpCodes.ora_absolute_x_command]
 
     def ora_command(self, input_value):
+        """Perform bitwise or on input_value and accumulator"""
         if input_value is None:
             return
 
@@ -166,11 +184,12 @@ class Chip6502(object):
                            OpCodes.and_zero_page_x_command,
                            OpCodes.and_absolute_y_command, OpCodes.and_absolute_x_command]
 
-    def and_command(self, operand):
-        if operand is None:
+    def and_command(self, input_value):
+        """Perform bitwise and on input_value and accumulator"""
+        if input_value is None:
             return
 
-        self.set_accumulator(operand & self.get_accumulator())
+        self.set_accumulator(input_value & self.get_accumulator())
 
     def __is_bit_command(self, command):
         return command in [OpCodes.bit_zero_page_command, OpCodes.bit_absolute_command]
@@ -203,8 +222,12 @@ class Chip6502(object):
                            OpCodes.eor_zero_page_x_command,
                            OpCodes.eor_absolute_y_command, OpCodes.eor_absolute_x_command]
 
-    def eor_command(self):
-        pass
+    def eor_command(self, input_value):
+        """Perform bitwise xor on input_value and accumulator"""
+        if input_value is None:
+            return
+
+        self.set_accumulator(input_value ^ self.get_accumulator())
 
     def __is_lsr_command(self, command):
         return command in [OpCodes.lsr_zero_page_command, OpCodes.lsr_accumulator_command, OpCodes.lsr_absolute_command,
@@ -231,8 +254,20 @@ class Chip6502(object):
                            OpCodes.adc_zero_page_x_command,
                            OpCodes.adc_absolute_y_command, OpCodes.adc_absolute_x_command]
 
-    def adc_command(self):
-        pass
+    def adc_command(self, input_value):
+        if input_value is None:
+            return
+
+        self.set_accumulator(input_value + self.get_accumulator())
+
+        if self.get_accumulator() > 0xFF:
+            self.set_accumulator(0xFF)
+            self.set_carry_flag()
+        else:
+            self.clear_carry_flag()
+
+        if self.get_accumulator() > 127:
+            self.set_overflow_flag()
 
     def __is_ror_command(self, command):
         return command in [OpCodes.ror_zero_page_command, OpCodes.ror_accumulator_command, OpCodes.ror_absolute_command,
@@ -393,7 +428,5 @@ class Chip6502(object):
 
     def sed_command(self):
         pass
-
-
 
 

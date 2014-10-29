@@ -46,8 +46,8 @@ class Chip6502Spy(Chip6502):
     def get_jsr_command_executed(self):
         return self.__jsr_command_executed
 
-    def and_command(self, operand):
-        super().and_command(operand)
+    def and_command(self, input_value):
+        super().and_command(input_value)
         self.__and_command_executed = True
 
     def get_and_command_executed(self):
@@ -89,7 +89,8 @@ class Chip6502Spy(Chip6502):
     def get_rti_command_executed(self):
         return self.__rti_command_executed
 
-    def eor_command(self):
+    def eor_command(self, input_value):
+        super().eor_command(input_value)
         self.__eor_command_executed = True
 
     def get_eor_command_executed(self):
@@ -128,7 +129,8 @@ class Chip6502Spy(Chip6502):
     def get_adc_command_executed(self):
         return self.__adc_command_executed
 
-    def adc_command(self):
+    def adc_command(self, input_value):
+        super().adc_command(input_value)
         self.__adc_command_executed = True
 
     def get_ror_command_executed(self):
@@ -399,4 +401,4 @@ class Chip6502Spy(Chip6502):
         self.__nop_command_executed = False
         self.__beq_command_executed = False
         self.__sed_command_executed = False
-        self.accumulator = 0x0
+        self.__accumulator = 0x0

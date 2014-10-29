@@ -7,6 +7,7 @@ class Chip6502(object):
         self.__accumulator = 0x0
         self.__carry_flag = 0x0
         self.__overflow_flag = 0x0
+        self.__zero_flag = 0x0
 
     def set_accumulator(self, value):
         self.__accumulator = value
@@ -28,6 +29,12 @@ class Chip6502(object):
 
     def set_overflow_flag(self):
         self.__overflow_flag = 0x01
+
+    def get_zero_flag(self):
+        return self.__zero_flag
+
+    def set_zero_flag(self):
+        self.__zero_flag = 0x01
 
     def execute(self, command, operand=None):
         if command == OpCodes.brk_command:
@@ -269,6 +276,9 @@ class Chip6502(object):
         if self.get_accumulator() > 127:
             self.set_overflow_flag()
 
+        if self.get_accumulator() == 0:
+            self.set_zero_flag()
+
     def __is_ror_command(self, command):
         return command in [OpCodes.ror_zero_page_command, OpCodes.ror_accumulator_command, OpCodes.ror_absolute_command,
                            OpCodes.ror_zero_page_x_command, OpCodes.ror_absolute_x_command]
@@ -428,5 +438,8 @@ class Chip6502(object):
 
     def sed_command(self):
         pass
+
+
+
 
 

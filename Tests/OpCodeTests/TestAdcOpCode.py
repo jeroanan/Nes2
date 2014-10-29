@@ -70,6 +70,24 @@ class TestAdcOpCode(OpCodeTestBase):
 
         self.assertEqual(expected_value, actual_value)
 
+    def test_adc_immediate_command_does_not_set_zero_flag_needlessly(self):
+        self.target.set_accumulator(0x01)
+        self.target.execute(OpCodes.adc_immediate_command, 0x01)
+
+        expected_value = 0x0
+        actual_value = self.target.get_zero_flag()
+
+        self.assertEqual(expected_value, actual_value)
+
+    def test_adc_immediate_command_sets_zero_flag_when_needed(self):
+        self.target.set_accumulator(-1)
+        self.target.execute(OpCodes.adc_immediate_command, 0x01)
+
+        expected_value = 0x1
+        actual_value = self.target.get_zero_flag()
+
+        self.assertEqual(expected_value, actual_value)
+
     def test_adc_absolute_y_command_calls_adc_method(self):
         self.assert_opcode_execution(OpCodes.adc_absolute_y_command, self.target.get_adc_command_executed)
 

@@ -214,19 +214,22 @@ class Chip6502Spy(Chip6502):
     def get_ldy_command_executed(self):
         return self.__ldy_command_executed
 
-    def ldy_command(self):
+    def ldy_command(self, input_value):
+        super().ldy_command(input_value)
         self.__ldy_command_executed = True
 
     def get_lda_command_executed(self):
         return self.__lda_command_executed
 
-    def lda_command(self):
+    def lda_command(self, input_value):
+        super().lda_command(input_value)
         self.__lda_command_executed = True
 
     def get_ldx_command_executed(self):
         return self.__ldx_command_executed
 
-    def ldx_command(self):
+    def ldx_command(self, input_value):
+        super().ldx_command(input_value)
         self.__ldx_command_executed = True
 
     def get_tay_command_executed(self):
@@ -262,7 +265,8 @@ class Chip6502Spy(Chip6502):
     def get_cpy_command_executed(self):
         return self.__cpy_command_executed
 
-    def cpy_command(self):
+    def cpy_command(self, input_value):
+        super().cpy_command(input_value)
         self.__cpy_command_executed = True
 
     def get_cmp_command_executed(self):

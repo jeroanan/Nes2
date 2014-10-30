@@ -8,6 +8,9 @@ class Chip6502(object):
         self.__carry_flag = 0x0
         self.__overflow_flag = 0x0
         self.__zero_flag = 0x0
+        self.__negative_flag = 0x0
+        self.__x_register = 0x0
+        self.__y_register = 0x0
 
     def set_accumulator(self, value):
         self.__accumulator = value
@@ -33,8 +36,27 @@ class Chip6502(object):
     def get_zero_flag(self):
         return self.__zero_flag
 
-    def set_zero_flag(self):
-        self.__zero_flag = 0x01
+    def __set_zero_flag(self, result):
+        self.__zero_flag = 0x00
+        if result == 0x0:
+            self.__zero_flag = 0x01
+
+    def get_negative_flag(self):
+        return self.__negative_flag
+
+    def __set_negative_flag(self, value):
+        self.__negative_flag = 0x0
+        if value >= 128:
+            self.__negative_flag = 0x1
+
+    def get_x_register(self):
+        return self.__x_register
+
+    def get_y_register(self):
+        return self.__y_register
+
+    def set_y_register(self, value):
+        self.__y_register = value
 
     def execute(self, command, operand=None):
         if command == OpCodes.brk_command:
@@ -106,11 +128,11 @@ class Chip6502(object):
         elif command == OpCodes.txs_implied_command:
             self.txs_command()
         elif self.__is_ldy_command(command):
-            self.ldy_command()
+            self.ldy_command(operand)
         elif self.__is_lda_command(command):
-            self.lda_command()
+            self.lda_command(operand)
         elif self.__is_ldx_command(command):
-            self.ldx_command()
+            self.ldx_command(operand)
         elif command == OpCodes.tay_implied_command:
             self.tay_command()
         elif command == OpCodes.tax_implied_command:
@@ -122,7 +144,7 @@ class Chip6502(object):
         elif command == OpCodes.tsx_implied_command:
             self.tsx_command()
         elif self.__is_cpy_command(command):
-            self.cpy_command()
+            self.cpy_command(operand)
         elif self.__is_cmp_command(command):
             self.cmp_command()
         elif self.__is_dec_command(command):
@@ -276,8 +298,7 @@ class Chip6502(object):
         if self.get_accumulator() > 127:
             self.set_overflow_flag()
 
-        if self.get_accumulator() == 0:
-            self.set_zero_flag()
+        self.__set_zero_flag(self.get_accumulator())
 
     def __is_ror_command(self, command):
         return command in [OpCodes.ror_zero_page_command, OpCodes.ror_accumulator_command, OpCodes.ror_absolute_command,
@@ -337,8 +358,15 @@ class Chip6502(object):
         return command in [OpCodes.ldy_immediate_command, OpCodes.ldy_zero_page_command, OpCodes.ldy_absolute_command,
                            OpCodes.ldy_zero_page_x_command, OpCodes.ldy_absolute_x_command]
 
-    def ldy_command(self):
-        pass
+    def ldy_command(self, input_value):
+        """load input_value into the y register"""
+        if input_value is None:
+            return
+
+        self.__y_register = input_value
+
+        self.__set_zero_flag(self.get_y_register())
+        self.__set_negative_flag(self.get_y_register())
 
     def __is_lda_command(self, command):
         return command in [OpCodes.lda_indirect_x_command, OpCodes.lda_zero_page_command, OpCodes.lda_immediate_command,
@@ -346,15 +374,28 @@ class Chip6502(object):
                            OpCodes.lda_zero_page_x_command, OpCodes.lda_absolute_y_command,
                            OpCodes.lda_absolute_x_command]
 
-    def lda_command(self):
-        pass
+    def lda_command(self, input_value):
+        """load input_value into the accumulator"""
+        if input_value is None:
+            return
+
+        self.set_accumulator(input_value)
+
+        self.__set_zero_flag(self.get_accumulator())
+        self.__set_negative_flag(self.get_accumulator())
 
     def __is_ldx_command(self, command):
         return command in [OpCodes.ldx_immediate_command, OpCodes.ldx_zero_page_command, OpCodes.ldx_absolute_command,
                            OpCodes.ldx_zero_page_y_command, OpCodes.ldx_absolute_y_command]
 
-    def ldx_command(self):
-        pass
+    def ldx_command(self, input_value):
+        """load input_value into the x register"""
+        if input_value is None:
+            return
+
+        self.__x_register = input_value
+        self.__set_zero_flag(self.__x_register)
+        self.__set_negative_flag(self.__x_register)
 
     def tay_command(self):
         pass
@@ -374,8 +415,13 @@ class Chip6502(object):
     def __is_cpy_command(self, command):
         return command in [OpCodes.cpy_immediate_command, OpCodes.cpy_zero_page_command, OpCodes.cpy_absolute_command]
 
-    def cpy_command(self):
-        pass
+    def cpy_command(self, input_value):
+        if input_value is None:
+            return
+
+        self.__set_zero_flag(not input_value == self.get_y_register())
+        if input_value <= self.get_y_register():
+            self.__carry_flag = 0x1
 
     def __is_cmp_command(self, command):
         return command in [OpCodes.cmp_indirect_x_command, OpCodes.cmp_zero_page_command, OpCodes.cmp_immediate_command,

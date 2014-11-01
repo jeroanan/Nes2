@@ -33,6 +33,9 @@ class Chip6502(object):
     def set_overflow_flag(self):
         self.__overflow_flag = 0x01
 
+    def clear_overflow_flag(self):
+        self.__overflow_flag = 0x0
+
     def get_zero_flag(self):
         return self.__zero_flag
 
@@ -51,6 +54,9 @@ class Chip6502(object):
 
     def get_x_register(self):
         return self.__x_register
+
+    def set_x_register(self, value):
+        self.__x_register = value
 
     def get_y_register(self):
         return self.__y_register
@@ -146,7 +152,7 @@ class Chip6502(object):
         elif self.__is_cpy_command(command):
             self.cpy_command(operand)
         elif self.__is_cmp_command(command):
-            self.cmp_command()
+            self.cmp_command(operand)
         elif self.__is_dec_command(command):
             self.dec_command()
         elif command == OpCodes.iny_implied_command:
@@ -158,9 +164,9 @@ class Chip6502(object):
         elif command == OpCodes.cld_implied_command:
             self.cld_command()
         elif self.__is_cpx_command(command):
-            self.cpx_command()
+            self.cpx_command(operand)
         elif self.__is_sbc_command(command):
-            self.sbc_command()
+            self.sbc_command(operand)
         elif self.__is_inc_command(command):
             self.inc_command()
         elif command == OpCodes.inx_implied_command:
@@ -289,13 +295,14 @@ class Chip6502(object):
 
         self.set_accumulator(input_value + self.get_accumulator())
 
+        self.clear_carry_flag()
+
         if self.get_accumulator() > 0xFF:
             self.set_accumulator(0xFF)
             self.set_carry_flag()
-        else:
-            self.clear_carry_flag()
 
-        if self.get_accumulator() > 127:
+        self.clear_overflow_flag()
+        if self.get_accumulator() > 127 or self.get_accumulator() < -127:
             self.set_overflow_flag()
 
         self.__set_zero_flag(self.get_accumulator())
@@ -419,9 +426,9 @@ class Chip6502(object):
         if input_value is None:
             return
 
-        self.__set_zero_flag(not input_value == self.get_y_register())
-        if input_value <= self.get_y_register():
-            self.__carry_flag = 0x1
+        self.__set_zero_flag(input_value != self.get_y_register())
+        self.__set_carry_flag_based_on_register_compare(self.get_y_register(), input_value)
+        self.__set_negative_flag_based_on_register_compare(self.get_y_register(), input_value)
 
     def __is_cmp_command(self, command):
         return command in [OpCodes.cmp_indirect_x_command, OpCodes.cmp_zero_page_command, OpCodes.cmp_immediate_command,
@@ -429,8 +436,13 @@ class Chip6502(object):
                            OpCodes.cmp_zero_page_x_command, OpCodes.cmp_absolute_y_command,
                            OpCodes.cmp_absolute_x_command]
 
-    def cmp_command(self):
-        pass
+    def cmp_command(self, input_value):
+        if input_value is None:
+            return
+
+        self.__set_zero_flag(input_value != self.get_accumulator())
+        self.__set_carry_flag_based_on_register_compare(self.get_accumulator(), input_value)
+        self.__set_negative_flag_based_on_register_compare(self.get_accumulator(), input_value)
 
     def __is_dec_command(self, command):
         return command in [OpCodes.dec_zero_page_command, OpCodes.dec_absolute_command, OpCodes.dec_zero_page_x_command,
@@ -454,8 +466,21 @@ class Chip6502(object):
     def __is_cpx_command(self, command):
         return command in [OpCodes.cpx_immediate_command, OpCodes.cpx_zero_page_command, OpCodes.cpx_absolute_command]
 
-    def cpx_command(self):
-        pass
+    def cpx_command(self, input_value):
+        if input_value is None:
+            return
+
+        self.__set_zero_flag(input_value != self.get_x_register())
+        self.__set_carry_flag_based_on_register_compare(self.get_x_register(), input_value)
+        self.__set_negative_flag_based_on_register_compare(self.get_x_register(), input_value)
+
+    def __set_carry_flag_based_on_register_compare(self, register_value, input_value):
+        if register_value > input_value:
+            self.__carry_flag = 0x01
+
+    def __set_negative_flag_based_on_register_compare(self, register_value, input_value):
+        if register_value < input_value:
+            self.__negative_flag = 0x01
 
     def __is_sbc_command(self, command):
         return command in [OpCodes.sbc_indirect_x_command, OpCodes.sbc_zero_page_command, OpCodes.sbc_immediate_command,
@@ -463,8 +488,22 @@ class Chip6502(object):
                            OpCodes.sbc_zero_page_x_command, OpCodes.sbc_absolute_y_command,
                            OpCodes.sbc_absolute_x_command]
 
-    def sbc_command(self):
-        pass
+    def sbc_command(self, input_value):
+        if input_value is None:
+            return
+
+        result = self.get_accumulator() - input_value
+        self.set_accumulator(result)
+
+        self.clear_carry_flag()
+        if result < 0:
+            self.set_carry_flag()
+
+        self.clear_overflow_flag()
+        if result < -127 or result > 127:
+            self.set_overflow_flag()
+
+        self.__set_zero_flag(result)
 
     def __is_inc_command(self, command):
         return command in [OpCodes.inc_zero_page_command, OpCodes.inc_absolute_command, OpCodes.inc_zero_page_x_command,

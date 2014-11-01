@@ -272,7 +272,8 @@ class Chip6502Spy(Chip6502):
     def get_cmp_command_executed(self):
         return self.__cmp_command_executed
 
-    def cmp_command(self):
+    def cmp_command(self, input_value):
+        super().cmp_command(input_value)
         self.__cmp_command_executed = True
 
     def get_dec_command_executed(self):
@@ -308,13 +309,15 @@ class Chip6502Spy(Chip6502):
     def get_cpx_command_executed(self):
         return self.__cpx_command_executed
 
-    def cpx_command(self):
+    def cpx_command(self, input_value):
+        super().cpx_command(input_value)
         self.__cpx_command_executed = True
 
     def get_sbc_command_executed(self):
         return self.__sbc_command_executed
 
-    def sbc_command(self):
+    def sbc_command(self, input_value):
+        super().sbc_command(input_value)
         self.__sbc_command_executed = True
 
     def get_inc_command_executed(self):

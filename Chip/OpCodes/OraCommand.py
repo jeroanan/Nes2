@@ -1,0 +1,2 @@
+class OraCommand(object):
+    pass

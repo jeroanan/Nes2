@@ -1,13 +1,13 @@
-from Chip import OpCodes
+from Chip import OpCodeDefinitions
 from Tests.OpCodeTests.OpCodeTestBase import OpCodeTestBase
 
 
 class TestSbcOpCode(OpCodeTestBase):
     def test_sbc_indirect_x_command_calls_sbc_method(self):
-        self.assert_opcode_execution(OpCodes.sbc_indirect_x_command, self.target.get_sbc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.sbc_indirect_x_command, self.target.get_sbc_command_executed)
 
     def test_sbc_zero_page_command_calls_sbc_method(self):
-        self.assert_opcode_execution(OpCodes.sbc_zero_page_command, self.target.get_sbc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.sbc_zero_page_command, self.target.get_sbc_command_executed)
 
     def test_sbc_immediate_command_performs_subtraction(self):
         self.__two_minus_one()
@@ -51,19 +51,19 @@ class TestSbcOpCode(OpCodeTestBase):
 
     def __subtract_two_numbers(self, x, y):
         self.target.set_accumulator(x)
-        self.target.execute(OpCodes.sbc_immediate_command, y)
+        self.target.execute(OpCodeDefinitions.sbc_immediate_command, y)
 
     def test_sbc_absolute_command_calls_sbc_method(self):
-        self.assert_opcode_execution(OpCodes.sbc_absolute_command, self.target.get_sbc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.sbc_absolute_command, self.target.get_sbc_command_executed)
 
     def test_sbc_indirect_y_command_calls_sbc_method(self):
-        self.assert_opcode_execution(OpCodes.sbc_indirect_y_command, self.target.get_sbc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.sbc_indirect_y_command, self.target.get_sbc_command_executed)
 
     def test_sbc_zero_page_x_command_calls_sbc_method(self):
-        self.assert_opcode_execution(OpCodes.sbc_zero_page_x_command, self.target.get_sbc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.sbc_zero_page_x_command, self.target.get_sbc_command_executed)
 
     def test_sbc_absolute_y_command_calls_sbc_method(self):
-        self.assert_opcode_execution(OpCodes.sbc_absolute_y_command, self.target.get_sbc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.sbc_absolute_y_command, self.target.get_sbc_command_executed)
 
     def test_sbc_absolute_x_command_calls_sbc_method(self):
-        self.assert_opcode_execution(OpCodes.sbc_absolute_x_command, self.target.get_sbc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.sbc_absolute_x_command, self.target.get_sbc_command_executed)

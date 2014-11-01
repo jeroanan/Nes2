@@ -1,16 +1,24 @@
-from Chip import OpCodes
+from Chip import OpCodeDefinitions
+from Chip import OpCodeDefinitions
 from Tests.OpCodeTests.OpCodeTestBase import OpCodeTestBase
 
 
 class TestAdcOpCode(OpCodeTestBase):
+
+    def setUp(self):
+        super().setUp()
+        self.___adc_indirect_x_command = OpCodeDefinitions.adc_indirect_x_command
+        self.__adc_zero_page_command = OpCodeDefinitions.adc_zero_page_command
+        self.__adc_absolute_command = OpCodeDefinitions.adc_absolute_command
+
     def test_adc_indirect_x_command_calls_adc_method(self):
-        self.assert_opcode_execution(OpCodes.adc_indirect_x_command, self.target.get_adc_command_executed)
+        self.assert_opcode_execution(self.___adc_indirect_x_command, self.target.get_adc_command_executed)
 
     def test_adc_zero_page_command_calls_adc_method(self):
-        self.assert_opcode_execution(OpCodes.adc_zero_page_command, self.target.get_adc_command_executed)
+        self.assert_opcode_execution(self.__adc_zero_page_command, self.target.get_adc_command_executed)
 
     def test_adc_absolute_command_calls_adc_method(self):
-        self.assert_opcode_execution(OpCodes.adc_absolute_command, self.target.get_adc_command_executed)
+        self.assert_opcode_execution(self.__adc_absolute_command, self.target.get_adc_command_executed)
 
     def test_adc_immediate_command_performs_add(self):
         self.__one_plus_one()
@@ -51,16 +59,16 @@ class TestAdcOpCode(OpCodeTestBase):
 
     def __add_two_numbers(self, x, y):
         self.target.set_accumulator(x)
-        self.target.execute(OpCodes.adc_immediate_command, y)
+        self.target.execute(OpCodeDefinitions.adc_immediate_command, y)
 
     def test_adc_absolute_y_command_calls_adc_method(self):
-        self.assert_opcode_execution(OpCodes.adc_absolute_y_command, self.target.get_adc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.adc_absolute_y_command, self.target.get_adc_command_executed)
 
     def test_adc_absolute_x_command_calls_adc_method(self):
-        self.assert_opcode_execution(OpCodes.adc_absolute_x_command, self.target.get_adc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.adc_absolute_x_command, self.target.get_adc_command_executed)
 
     def test_adc_indirect_y_command_calls_adc_method(self):
-        self.assert_opcode_execution(OpCodes.adc_indirect_y_command, self.target.get_adc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.adc_indirect_y_command, self.target.get_adc_command_executed)
 
     def test_adc_zero_page_x_command_calls_adc_method(self):
-        self.assert_opcode_execution(OpCodes.adc_zero_page_x_command, self.target.get_adc_command_executed)
+        self.assert_opcode_execution(OpCodeDefinitions.adc_zero_page_x_command, self.target.get_adc_command_executed)

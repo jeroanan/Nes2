@@ -1,9 +1,10 @@
 from Chip import OpCodeDefinitions
+from Chip.OpCodeFactory import OpCodeFactory
 
 
 class Chip6502(object):
 
-    def __init__(self):
+    def __init__(self,):
         self.__accumulator = 0x0
         self.__carry_flag = 0x0
         self.__overflow_flag = 0x0
@@ -11,6 +12,7 @@ class Chip6502(object):
         self.__negative_flag = 0x0
         self.__x_register = 0x0
         self.__y_register = 0x0
+        self.__op_code_factory = OpCodeFactory(self)
 
     def set_accumulator(self, value):
         self.__accumulator = value
@@ -64,118 +66,122 @@ class Chip6502(object):
     def set_y_register(self, value):
         self.__y_register = value
 
-    def execute(self, command, operand=None):
-        if command == OpCodeDefinitions.brk_command:
+    def execute(self, opcode, operand=None):
+
+        command = self.__op_code_factory.get_command(opcode)
+
+        if opcode == OpCodeDefinitions.brk_command:
             self.brk_command()
-        elif self.__is_ora_command(command):
+        elif self.__is_ora_command(opcode):
+            command.execute(operand)
             self.ora_command(operand)
-        elif self.__is_asl_command(command):
+        elif self.__is_asl_command(opcode):
             self.asl_command()
-        elif command == OpCodeDefinitions.php_implied_command:
+        elif opcode == OpCodeDefinitions.php_implied_command:
             self.php_command()
-        elif command == OpCodeDefinitions.bpl_relative_command:
+        elif opcode == OpCodeDefinitions.bpl_relative_command:
             self.bpl_command()
-        elif command == OpCodeDefinitions.clc_implied_command:
+        elif opcode == OpCodeDefinitions.clc_implied_command:
             self.clc_command()
-        elif command == OpCodeDefinitions.jsr_absolute_command:
+        elif opcode == OpCodeDefinitions.jsr_absolute_command:
             self.jsr_command()
-        elif self.__is_and_command(command):
+        elif self.__is_and_command(opcode):
             self.and_command(operand)
-        elif self.__is_bit_command(command):
+        elif self.__is_bit_command(opcode):
             self.bit_command()
-        elif self.__is_rol_command(command):
+        elif self.__is_rol_command(opcode):
             self.rol_command()
-        elif command == OpCodeDefinitions.plp_implied_command:
+        elif opcode == OpCodeDefinitions.plp_implied_command:
             self.plp_command()
-        elif command == OpCodeDefinitions.bmi_relative_command:
+        elif opcode == OpCodeDefinitions.bmi_relative_command:
             self.bmi_command()
-        elif command == OpCodeDefinitions.sec_implied_command:
+        elif opcode == OpCodeDefinitions.sec_implied_command:
             self.sec_command()
-        elif command == OpCodeDefinitions.rti_implied_command:
+        elif opcode == OpCodeDefinitions.rti_implied_command:
             self.rti_command()
-        elif self.__is_eor_command(command):
+        elif self.__is_eor_command(opcode):
             self.eor_command(operand)
-        elif self.__is_lsr_command(command):
+        elif self.__is_lsr_command(opcode):
             self.lsr_command()
-        elif command == OpCodeDefinitions.pha_implied_command:
+        elif opcode == OpCodeDefinitions.pha_implied_command:
             self.pha_command()
-        elif command == OpCodeDefinitions.bvc_relative_command:
+        elif opcode == OpCodeDefinitions.bvc_relative_command:
             self.bvc_command()
-        elif command == OpCodeDefinitions.cli_implied_command:
+        elif opcode == OpCodeDefinitions.cli_implied_command:
             self.cli_command()
-        elif command == OpCodeDefinitions.rts_implied_command:
+        elif opcode == OpCodeDefinitions.rts_implied_command:
             self.rts_command()
-        elif self.__is_adc_command(command):
+        elif self.__is_adc_command(opcode):
             self.adc_command(operand)
-        elif self.__is_ror_command(command):
+        elif self.__is_ror_command(opcode):
             self.ror_command()
-        elif command == OpCodeDefinitions.pla_implied_command:
+        elif opcode == OpCodeDefinitions.pla_implied_command:
             self.pla_command()
-        elif command == OpCodeDefinitions.jmp_indirect_command:
+        elif opcode == OpCodeDefinitions.jmp_indirect_command:
             self.jmp_command()
-        elif command == OpCodeDefinitions.bvs_relative_command:
+        elif opcode == OpCodeDefinitions.bvs_relative_command:
             self.bvs_command()
-        elif command == OpCodeDefinitions.sei_implied_command:
+        elif opcode == OpCodeDefinitions.sei_implied_command:
             self.sei_command()
-        elif self.__is_sta_command(command):
+        elif self.__is_sta_command(opcode):
             self.sta_command()
-        elif self.__is_sty_command(command):
+        elif self.__is_sty_command(opcode):
             self.sty_command()
-        elif self.__is_stx_command(command):
+        elif self.__is_stx_command(opcode):
             self.stx_command()
-        elif command == OpCodeDefinitions.dey_implied_command:
+        elif opcode == OpCodeDefinitions.dey_implied_command:
             self.dey_command()
-        elif command == OpCodeDefinitions.txa_implied_command:
+        elif opcode == OpCodeDefinitions.txa_implied_command:
             self.txa_command()
-        elif command == OpCodeDefinitions.bcc_relative_command:
+        elif opcode == OpCodeDefinitions.bcc_relative_command:
             self.bcc_command()
-        elif command == OpCodeDefinitions.tya_implied_command:
+        elif opcode == OpCodeDefinitions.tya_implied_command:
             self.tya_command()
-        elif command == OpCodeDefinitions.txs_implied_command:
+        elif opcode == OpCodeDefinitions.txs_implied_command:
             self.txs_command()
-        elif self.__is_ldy_command(command):
+        elif self.__is_ldy_command(opcode):
             self.ldy_command(operand)
-        elif self.__is_lda_command(command):
+        elif self.__is_lda_command(opcode):
             self.lda_command(operand)
-        elif self.__is_ldx_command(command):
+        elif self.__is_ldx_command(opcode):
             self.ldx_command(operand)
-        elif command == OpCodeDefinitions.tay_implied_command:
+        elif opcode == OpCodeDefinitions.tay_implied_command:
             self.tay_command()
-        elif command == OpCodeDefinitions.tax_implied_command:
+        elif opcode == OpCodeDefinitions.tax_implied_command:
             self.tax_command()
-        elif command == OpCodeDefinitions.bcs_relative_command:
+        elif opcode == OpCodeDefinitions.bcs_relative_command:
             self.bcs_command()
-        elif command == OpCodeDefinitions.clv_implied_command:
+        elif opcode == OpCodeDefinitions.clv_implied_command:
             self.clv_command()
-        elif command == OpCodeDefinitions.tsx_implied_command:
+        elif opcode == OpCodeDefinitions.tsx_implied_command:
             self.tsx_command()
-        elif self.__is_cpy_command(command):
+        elif self.__is_cpy_command(opcode):
             self.cpy_command(operand)
-        elif self.__is_cmp_command(command):
+        elif self.__is_cmp_command(opcode):
             self.cmp_command(operand)
-        elif self.__is_dec_command(command):
+        elif self.__is_dec_command(opcode):
             self.dec_command()
-        elif command == OpCodeDefinitions.iny_implied_command:
+        elif opcode == OpCodeDefinitions.iny_implied_command:
             self.iny_command()
-        elif command == OpCodeDefinitions.dex_implied_command:
+        elif opcode == OpCodeDefinitions.dex_implied_command:
             self.dex_command()
-        elif command == OpCodeDefinitions.bne_relative_command:
+        elif opcode == OpCodeDefinitions.bne_relative_command:
             self.bne_command()
-        elif command == OpCodeDefinitions.cld_implied_command:
+        elif opcode == OpCodeDefinitions.cld_implied_command:
             self.cld_command()
-        elif self.__is_cpx_command(command):
+        elif self.__is_cpx_command(opcode):
             self.cpx_command(operand)
-        elif self.__is_sbc_command(command):
+        elif self.__is_sbc_command(opcode):
             self.sbc_command(operand)
-        elif self.__is_inc_command(command):
+        elif self.__is_inc_command(opcode):
             self.inc_command()
-        elif command == OpCodeDefinitions.inx_implied_command:
+        elif opcode == OpCodeDefinitions.inx_implied_command:
             self.inx_command()
-        elif command == OpCodeDefinitions.nop_implied_command:
+        elif opcode == OpCodeDefinitions.nop_implied_command:
             self.nop_command()
-        elif command == OpCodeDefinitions.beq_relative_command:
+        elif opcode == OpCodeDefinitions.beq_relative_command:
             self.beq_command()
-        elif command == OpCodeDefinitions.sed_implied_command:
+        elif opcode == OpCodeDefinitions.sed_implied_command:
             self.sed_command()
 
     def brk_command(self):
@@ -188,11 +194,7 @@ class Chip6502(object):
                            OpCodeDefinitions.ora_absolute_y_command, OpCodeDefinitions.ora_absolute_x_command]
 
     def ora_command(self, input_value):
-        """Perform bitwise or on input_value and accumulator"""
-        if input_value is None:
-            return
-
-        self.set_accumulator(input_value | self.get_accumulator())
+        pass
 
     def __is_asl_command(self, command):
         return command in [OpCodeDefinitions.asl_zero_page_command, OpCodeDefinitions.asl_accumulator_command, OpCodeDefinitions.asl_absolute_command,
@@ -524,7 +526,8 @@ class Chip6502(object):
     def sed_command(self):
         pass
 
-
+    def set_opcode_factory(self, factory):
+        self.__op_code_factory = factory
 
 
 

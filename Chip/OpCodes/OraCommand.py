@@ -1,3 +1,6 @@
+from Chip import OpCodeDefinitions
+
+
 class OraCommand(object):
 
     def __init__(self, chip):
@@ -9,3 +12,7 @@ class OraCommand(object):
             return
 
         self.__chip.set_accumulator(input_value | self.__chip.get_accumulator())
+
+    @staticmethod
+    def matches(opcode):
+        return opcode in [OpCodeDefinitions.ora_indirect_x_command, OpCodeDefinitions.ora_zero_page_command]

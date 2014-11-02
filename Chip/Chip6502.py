@@ -3,8 +3,7 @@ from Chip.OpCodeFactory import OpCodeFactory
 
 
 class Chip6502(object):
-
-    def __init__(self,):
+    def __init__(self, ):
         self.__accumulator = 0x0
         self.__carry_flag = 0x0
         self.__overflow_flag = 0x0
@@ -74,7 +73,6 @@ class Chip6502(object):
             self.brk_command()
         elif self.__is_ora_command(opcode):
             command.execute(operand)
-            self.ora_command(operand)
         elif self.__is_asl_command(opcode):
             self.asl_command()
         elif opcode == OpCodeDefinitions.php_implied_command:
@@ -188,16 +186,15 @@ class Chip6502(object):
         pass
 
     def __is_ora_command(self, command):
-        return command in [OpCodeDefinitions.ora_indirect_x_command, OpCodeDefinitions.ora_zero_page_command, OpCodeDefinitions.ora_immediate_command,
+        return command in [OpCodeDefinitions.ora_indirect_x_command, OpCodeDefinitions.ora_zero_page_command,
+                           OpCodeDefinitions.ora_immediate_command,
                            OpCodeDefinitions.ora_absolute_command, OpCodeDefinitions.ora_indirect_y_command,
                            OpCodeDefinitions.ora_zero_page_x_command,
                            OpCodeDefinitions.ora_absolute_y_command, OpCodeDefinitions.ora_absolute_x_command]
 
-    def ora_command(self, input_value):
-        pass
-
     def __is_asl_command(self, command):
-        return command in [OpCodeDefinitions.asl_zero_page_command, OpCodeDefinitions.asl_accumulator_command, OpCodeDefinitions.asl_absolute_command,
+        return command in [OpCodeDefinitions.asl_zero_page_command, OpCodeDefinitions.asl_accumulator_command,
+                           OpCodeDefinitions.asl_absolute_command,
                            OpCodeDefinitions.asl_zero_page_x_command, OpCodeDefinitions.asl_absolute_x_command]
 
     def asl_command(self):
@@ -216,7 +213,8 @@ class Chip6502(object):
         pass
 
     def __is_and_command(self, command):
-        return command in [OpCodeDefinitions.and_indirect_x_command, OpCodeDefinitions.and_zero_page_command, OpCodeDefinitions.and_immediate_command,
+        return command in [OpCodeDefinitions.and_indirect_x_command, OpCodeDefinitions.and_zero_page_command,
+                           OpCodeDefinitions.and_immediate_command,
                            OpCodeDefinitions.and_absolute_command, OpCodeDefinitions.and_indirect_y_command,
                            OpCodeDefinitions.and_zero_page_x_command,
                            OpCodeDefinitions.and_absolute_y_command, OpCodeDefinitions.and_absolute_x_command]
@@ -235,7 +233,8 @@ class Chip6502(object):
         pass
 
     def __is_rol_command(self, command):
-        return command in [OpCodeDefinitions.rol_zero_page_command, OpCodeDefinitions.rol_accumulator_command, OpCodeDefinitions.rol_absolute_command,
+        return command in [OpCodeDefinitions.rol_zero_page_command, OpCodeDefinitions.rol_accumulator_command,
+                           OpCodeDefinitions.rol_absolute_command,
                            OpCodeDefinitions.rol_zero_page_x_command, OpCodeDefinitions.rol_absolute_x_command]
 
     def rol_command(self):
@@ -254,7 +253,8 @@ class Chip6502(object):
         pass
 
     def __is_eor_command(self, command):
-        return command in [OpCodeDefinitions.eor_indirect_x_command, OpCodeDefinitions.eor_zero_page_command, OpCodeDefinitions.eor_immediate_command,
+        return command in [OpCodeDefinitions.eor_indirect_x_command, OpCodeDefinitions.eor_zero_page_command,
+                           OpCodeDefinitions.eor_immediate_command,
                            OpCodeDefinitions.eor_absolute_command, OpCodeDefinitions.eor_indirect_y_command,
                            OpCodeDefinitions.eor_zero_page_x_command,
                            OpCodeDefinitions.eor_absolute_y_command, OpCodeDefinitions.eor_absolute_x_command]
@@ -267,7 +267,8 @@ class Chip6502(object):
         self.set_accumulator(input_value ^ self.get_accumulator())
 
     def __is_lsr_command(self, command):
-        return command in [OpCodeDefinitions.lsr_zero_page_command, OpCodeDefinitions.lsr_accumulator_command, OpCodeDefinitions.lsr_absolute_command,
+        return command in [OpCodeDefinitions.lsr_zero_page_command, OpCodeDefinitions.lsr_accumulator_command,
+                           OpCodeDefinitions.lsr_absolute_command,
                            OpCodeDefinitions.lsr_zero_page_x_command, OpCodeDefinitions.lsr_absolute_x_command]
 
     def lsr_command(self):
@@ -286,7 +287,8 @@ class Chip6502(object):
         pass
 
     def __is_adc_command(self, command):
-        return command in [OpCodeDefinitions.adc_indirect_x_command, OpCodeDefinitions.adc_zero_page_command, OpCodeDefinitions.adc_immediate_command,
+        return command in [OpCodeDefinitions.adc_indirect_x_command, OpCodeDefinitions.adc_zero_page_command,
+                           OpCodeDefinitions.adc_immediate_command,
                            OpCodeDefinitions.adc_absolute_command, OpCodeDefinitions.adc_indirect_y_command,
                            OpCodeDefinitions.adc_zero_page_x_command,
                            OpCodeDefinitions.adc_absolute_y_command, OpCodeDefinitions.adc_absolute_x_command]
@@ -310,7 +312,8 @@ class Chip6502(object):
         self.__set_zero_flag(self.get_accumulator())
 
     def __is_ror_command(self, command):
-        return command in [OpCodeDefinitions.ror_zero_page_command, OpCodeDefinitions.ror_accumulator_command, OpCodeDefinitions.ror_absolute_command,
+        return command in [OpCodeDefinitions.ror_zero_page_command, OpCodeDefinitions.ror_accumulator_command,
+                           OpCodeDefinitions.ror_absolute_command,
                            OpCodeDefinitions.ror_zero_page_x_command, OpCodeDefinitions.ror_absolute_x_command]
 
     def ror_command(self):
@@ -329,7 +332,8 @@ class Chip6502(object):
         pass
 
     def __is_sta_command(self, command):
-        return command in [OpCodeDefinitions.sta_indirect_x_command, OpCodeDefinitions.sta_zero_page_command, OpCodeDefinitions.sta_absolute_command,
+        return command in [OpCodeDefinitions.sta_indirect_x_command, OpCodeDefinitions.sta_zero_page_command,
+                           OpCodeDefinitions.sta_absolute_command,
                            OpCodeDefinitions.sta_indirect_y_command, OpCodeDefinitions.sta_zero_page_x_command,
                            OpCodeDefinitions.sta_absolute_y_command, OpCodeDefinitions.sta_absolute_x_command]
 
@@ -337,13 +341,15 @@ class Chip6502(object):
         pass
 
     def __is_sty_command(self, command):
-        return command in [OpCodeDefinitions.sty_zero_page_command, OpCodeDefinitions.sty_absolute_command, OpCodeDefinitions.sty_zero_page_x_command]
+        return command in [OpCodeDefinitions.sty_zero_page_command, OpCodeDefinitions.sty_absolute_command,
+                           OpCodeDefinitions.sty_zero_page_x_command]
 
     def sty_command(self):
         pass
 
     def __is_stx_command(self, command):
-        return command in [OpCodeDefinitions.stx_zero_page_command, OpCodeDefinitions.stx_absolute_command, OpCodeDefinitions.stx_zero_page_y_command]
+        return command in [OpCodeDefinitions.stx_zero_page_command, OpCodeDefinitions.stx_absolute_command,
+                           OpCodeDefinitions.stx_zero_page_y_command]
 
     def stx_command(self):
         pass
@@ -364,7 +370,8 @@ class Chip6502(object):
         pass
 
     def __is_ldy_command(self, command):
-        return command in [OpCodeDefinitions.ldy_immediate_command, OpCodeDefinitions.ldy_zero_page_command, OpCodeDefinitions.ldy_absolute_command,
+        return command in [OpCodeDefinitions.ldy_immediate_command, OpCodeDefinitions.ldy_zero_page_command,
+                           OpCodeDefinitions.ldy_absolute_command,
                            OpCodeDefinitions.ldy_zero_page_x_command, OpCodeDefinitions.ldy_absolute_x_command]
 
     def ldy_command(self, input_value):
@@ -378,7 +385,8 @@ class Chip6502(object):
         self.__set_negative_flag(self.get_y_register())
 
     def __is_lda_command(self, command):
-        return command in [OpCodeDefinitions.lda_indirect_x_command, OpCodeDefinitions.lda_zero_page_command, OpCodeDefinitions.lda_immediate_command,
+        return command in [OpCodeDefinitions.lda_indirect_x_command, OpCodeDefinitions.lda_zero_page_command,
+                           OpCodeDefinitions.lda_immediate_command,
                            OpCodeDefinitions.lda_absolute_command, OpCodeDefinitions.lda_indirect_y_command,
                            OpCodeDefinitions.lda_zero_page_x_command, OpCodeDefinitions.lda_absolute_y_command,
                            OpCodeDefinitions.lda_absolute_x_command]
@@ -394,7 +402,8 @@ class Chip6502(object):
         self.__set_negative_flag(self.get_accumulator())
 
     def __is_ldx_command(self, command):
-        return command in [OpCodeDefinitions.ldx_immediate_command, OpCodeDefinitions.ldx_zero_page_command, OpCodeDefinitions.ldx_absolute_command,
+        return command in [OpCodeDefinitions.ldx_immediate_command, OpCodeDefinitions.ldx_zero_page_command,
+                           OpCodeDefinitions.ldx_absolute_command,
                            OpCodeDefinitions.ldx_zero_page_y_command, OpCodeDefinitions.ldx_absolute_y_command]
 
     def ldx_command(self, input_value):
@@ -422,7 +431,8 @@ class Chip6502(object):
         pass
 
     def __is_cpy_command(self, command):
-        return command in [OpCodeDefinitions.cpy_immediate_command, OpCodeDefinitions.cpy_zero_page_command, OpCodeDefinitions.cpy_absolute_command]
+        return command in [OpCodeDefinitions.cpy_immediate_command, OpCodeDefinitions.cpy_zero_page_command,
+                           OpCodeDefinitions.cpy_absolute_command]
 
     def cpy_command(self, input_value):
         if input_value is None:
@@ -433,7 +443,8 @@ class Chip6502(object):
         self.__set_negative_flag_based_on_register_compare(self.get_y_register(), input_value)
 
     def __is_cmp_command(self, command):
-        return command in [OpCodeDefinitions.cmp_indirect_x_command, OpCodeDefinitions.cmp_zero_page_command, OpCodeDefinitions.cmp_immediate_command,
+        return command in [OpCodeDefinitions.cmp_indirect_x_command, OpCodeDefinitions.cmp_zero_page_command,
+                           OpCodeDefinitions.cmp_immediate_command,
                            OpCodeDefinitions.cmp_absolute_command, OpCodeDefinitions.cmp_indirect_y_command,
                            OpCodeDefinitions.cmp_zero_page_x_command, OpCodeDefinitions.cmp_absolute_y_command,
                            OpCodeDefinitions.cmp_absolute_x_command]
@@ -447,7 +458,8 @@ class Chip6502(object):
         self.__set_negative_flag_based_on_register_compare(self.get_accumulator(), input_value)
 
     def __is_dec_command(self, command):
-        return command in [OpCodeDefinitions.dec_zero_page_command, OpCodeDefinitions.dec_absolute_command, OpCodeDefinitions.dec_zero_page_x_command,
+        return command in [OpCodeDefinitions.dec_zero_page_command, OpCodeDefinitions.dec_absolute_command,
+                           OpCodeDefinitions.dec_zero_page_x_command,
                            OpCodeDefinitions.dec_absolute_x_command]
 
     def dec_command(self):
@@ -466,7 +478,8 @@ class Chip6502(object):
         pass
 
     def __is_cpx_command(self, command):
-        return command in [OpCodeDefinitions.cpx_immediate_command, OpCodeDefinitions.cpx_zero_page_command, OpCodeDefinitions.cpx_absolute_command]
+        return command in [OpCodeDefinitions.cpx_immediate_command, OpCodeDefinitions.cpx_zero_page_command,
+                           OpCodeDefinitions.cpx_absolute_command]
 
     def cpx_command(self, input_value):
         if input_value is None:
@@ -485,7 +498,8 @@ class Chip6502(object):
             self.__negative_flag = 0x01
 
     def __is_sbc_command(self, command):
-        return command in [OpCodeDefinitions.sbc_indirect_x_command, OpCodeDefinitions.sbc_zero_page_command, OpCodeDefinitions.sbc_immediate_command,
+        return command in [OpCodeDefinitions.sbc_indirect_x_command, OpCodeDefinitions.sbc_zero_page_command,
+                           OpCodeDefinitions.sbc_immediate_command,
                            OpCodeDefinitions.sbc_absolute_command, OpCodeDefinitions.sbc_indirect_y_command,
                            OpCodeDefinitions.sbc_zero_page_x_command, OpCodeDefinitions.sbc_absolute_y_command,
                            OpCodeDefinitions.sbc_absolute_x_command]
@@ -508,7 +522,8 @@ class Chip6502(object):
         self.__set_zero_flag(result)
 
     def __is_inc_command(self, command):
-        return command in [OpCodeDefinitions.inc_zero_page_command, OpCodeDefinitions.inc_absolute_command, OpCodeDefinitions.inc_zero_page_x_command,
+        return command in [OpCodeDefinitions.inc_zero_page_command, OpCodeDefinitions.inc_absolute_command,
+                           OpCodeDefinitions.inc_zero_page_x_command,
                            OpCodeDefinitions.inc_absolute_x_command]
 
     def inc_command(self):
